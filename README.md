@@ -5,8 +5,8 @@ Inventory and sales management system built with modern web technologies.
 The Frontend provides an intuitive interface for employees and admins.
 
 Frontend (Client)
-┌─────────────────────────────────────────────────┐              
-│React 18 + Vite                                               
+┌──────────────────────────────────────────────────┐             
+│React + Vite                                               
 │├── Authentication (JWT)                                      
 │├── Protected Routes                                           
 │├── Pages                                                    
@@ -19,4 +19,4 @@ Frontend (Client)
 │├── Services (API calls)                                      
 │├── Hooks (auth, fetch, state management)                      
 │└── Styling (Tailwind CSS + Recharts for graphs)               
-└─────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────┘
