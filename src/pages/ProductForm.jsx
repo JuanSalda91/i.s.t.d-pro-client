@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import { productApi } from '../api/productApi';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductCreatePage() {
-  const [form, setForm] = useState({
+
+  const navigate = useNavigate();
+
+  const initialForm = {
     sku: '',
     name: '',
     description: '',
-    category: 'Electronics',
+    category: '',
     price: '',
     cost: '',
     stock: '',
-    minStock: 10,
+    minStock: '',
     supplier: '',
-  });
+  };
+
+  const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -41,6 +47,7 @@ export default function ProductCreatePage() {
       setSuccess('Product created successfully');
       // optional: reset form
       // setForm({ ...initialValues });
+      setForm(initialForm);
     } catch (err) {
       const msg =
         err.response?.data?.message || 'Failed to create product';
@@ -48,6 +55,10 @@ export default function ProductCreatePage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleBackToDashboard = () => {
+    navigate('/'); //dashboard route
   };
 
   return (
@@ -144,9 +155,15 @@ export default function ProductCreatePage() {
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-slate-800 text-white text-sm rounded hover:bg-slate-900 disabled:opacity-50"
+          className="px-4 py-2 mr-4 bg-slate-800 text-white text-sm rounded hover:bg-slate-900 disabled:opacity-50"
         >
           {loading ? 'Saving…' : 'Create product'}
+        </button>
+        <button
+          onClick={handleBackToDashboard}
+          className="px-4 py-2 ml-40 bg-slate-800 text-white text-sm rounded hover:bg-slate-900 disabled:opacity-50"
+        >
+          Back to dashboard
         </button>
       </form>
     </div>
