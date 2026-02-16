@@ -28,8 +28,11 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = ({ token, user }) => {
+  const login = ({ token, refreshToken, user }) => {
     localStorage.setItem('token', token);
+    if (refreshToken) {
+      localStorage.setItem('refreshToken', refreshToken);
+    }
     localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
   };
