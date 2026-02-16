@@ -1,6 +1,8 @@
 import { useAuth } from '../context/AuthContext.jsx';
 import { useEffect, useState } from 'react';
 import { dashboardApi } from '../api/dashboardApi.js';
+import { Link } from 'react-router-dom';
+
 
 
 /**
@@ -103,15 +105,21 @@ if (loading) {
             <h1 className="text-xl font-semibold text-slate-800">
               I.S.T.D PRO Dashboard
             </h1>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-slate-600">{user?.email}</span>
-              <button
-                onClick={logout}
-                className="px-3 py-1 text-xs rounded bg-slate-800 text-white hover:bg-slate-900"
-              >
-                Logout
-              </button>
-            </div>
+<div className="flex items-center gap-3">
+<Link
+  to="/products/new"
+  className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
+>
+  New product
+</Link>
+<span className="text-sm text-slate-600">{user?.email}</span>
+<button
+  onClick={logout}
+  className="px-3 py-1 text-xs rounded bg-slate-800 text-white hover:bg-slate-900"
+>
+  Logout
+</button>
+</div>
           </header>
     
           {/* Error message */}
