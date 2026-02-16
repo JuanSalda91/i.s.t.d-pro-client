@@ -14,7 +14,7 @@ export const dashboardApi = {
         }),
 
         // GET /api/invoices/stats
-        getinvoicesStats: () => axiosClient.get('/invoices/stats'),
+        getInvoiceStats: () => axiosClient.get('/invoices/stats'),
 
         // GET /api/products/low-stock?threshold=5
         getLowStock: (threshold = 5) =>
