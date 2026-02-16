@@ -22,6 +22,9 @@ export default function DashboardPage() {
       monthlyRevenue: 0,
       totalInvoices: 0,
       paidInvoices: 0,
+      unpaidInvoices: 0,
+      pendingAmount: 0,
+      averageInvoiceAmount: 0,
       lowStockCount: 0,
     });
   
@@ -50,19 +53,27 @@ export default function DashboardPage() {
           }
   
           // ----- Invoice stats -----
-          const invoiceStats = invoiceStatsRes.data || {};
+          const invoiceStats = invoiceStatsRes.data?.stats || {};
+
           const totalInvoices = invoiceStats.totalInvoices || 0;
           const paidInvoices = invoiceStats.paidInvoices || 0;
+          const unpaidInvoices = invoiceStats.unpaidInvoices || 0;
+          const pendingAmount = invoiceStats.pendingAmount || 0;
+          const averageInvoiceAmount = invoiceStats.averageInvoiceAmount || 0;
   
           // ----- Low stock -----
           const lowStockCount = lowStockRes.data?.count || 0;
   
-          setStats({
+          setStats(prev => ({
+            ...prev,
             monthlyRevenue,
             totalInvoices,
             paidInvoices,
+            unpaidInvoices,
+            pendingAmount,
+            averageInvoiceAmount,
             lowStockCount,
-          });
+          }));
         } catch (err) {
           console.error('Error loading dashboard data:', err);
           const message =
@@ -134,7 +145,7 @@ if (loading) {
                 {stats.totalInvoices}
               </p>
               <p className="text-xs text-slate-500 mt-1">
-                Paid: {stats.paidInvoices} • Unpaid:{' '}
+                Paid: {stats.paidInvoices} • Unpaid:{stats.unpaidInvoices}
                 {stats.totalInvoices - stats.paidInvoices}
               </p>
             </div>
