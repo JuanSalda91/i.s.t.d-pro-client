@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ProductForm from './pages/ProductForm.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -20,6 +21,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardPage />} />
             {/* later: <Route path="/products" element={<ProductsPage />} /> etc. */}
+
+            <Route path="/products/new" element={<ProductForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
