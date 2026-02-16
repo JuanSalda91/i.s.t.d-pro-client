@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./index.css";
 
-import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import ProductForm from './pages/ProductForm.jsx';
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import ProductForm from "./pages/ProductForm.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
       <BrowserRouter>
@@ -17,15 +18,18 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           {/* Public route */}
           <Route path="/login" element={<LoginPage />} />
 
+          {/*Register Route */}
+          <Route path="/register" element={<RegisterPage />} />
+
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardPage />} />
-            {/* later: <Route path="/products" element={<ProductsPage />} /> etc. */}
 
+            {/* Register Products Route */}
             <Route path="/products/new" element={<ProductForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
