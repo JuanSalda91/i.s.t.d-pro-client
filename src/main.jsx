@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProductForm from "./pages/ProductForm.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
+import ProductListPage from "./pages/ProductsListPage.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -27,6 +28,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
             {/* Register Products Route */}
             <Route path="/products/new" element={<ProductForm />} />
+
+          {/* Product List */}
+          <Route path="/products" element={<ProductsListPage />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
