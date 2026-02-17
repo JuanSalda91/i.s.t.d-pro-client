@@ -1,19 +1,18 @@
-import axiosClient from './axiosClient.js';
+import axiosClient from './axiosClient';
 
 export const invoiceApi = {
+  // Create an invoice from a sale
+  createInvoiceFromSale: (data) => axiosClient.post('/invoices', data),
 
-    // create an invoice from a sale
-    createinvoiceFormSale: (data) => axiosClient.post('/invoices', data),
+  // Get list of invoices (admin)
+  getInvoices: (params) => axiosClient.get('/invoices', { params }),
 
-    //get list of invoices (admin)
-    getinvoices: (params) => axiosClient.get('/invoices', {params}),
+  // Get single invoice
+  getInvoiceById: (id) => axiosClient.get(`/invoices/${id}`),
 
-    //get single invoice
-    getInvoiceById: (id) => axiosClient.get(`/invoices/${id}`),
-
-    //Download PDF
-    downloadInvoicePdf: (id) =>
-        axiosClient.get(`/invoices/${id}/pdf`, {
-          responseType: 'blob',
-        }),
+  // Download PDF
+  downloadInvoicePdf: (id) =>
+    axiosClient.get(`/invoices/${id}/pdf`, {
+      responseType: 'blob',
+    }),
 };
