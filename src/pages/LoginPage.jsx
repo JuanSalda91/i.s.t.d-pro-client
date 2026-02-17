@@ -49,7 +49,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-slate-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-semibold mb-6 text-center text-slate-800">
-          I.S.T.D PRO Login
+          Log In
         </h1>
 
         {error && (
@@ -68,6 +68,7 @@ export default function LoginPage() {
               className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
               required
               autoComplete="email"
             />
@@ -82,6 +83,7 @@ export default function LoginPage() {
               className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
               required
               autoComplete="current-password"
             />
@@ -94,7 +96,7 @@ export default function LoginPage() {
           >
             {submitting ? "Logging in..." : "Login"}
           </button>
-          <p className="mt-4 text-xs text-slate-600">
+          <p className="mt-4 text-xs text-slate-600 text-center">
             Don&apos;t have an account?{" "}
             <Link
               to="/register"
