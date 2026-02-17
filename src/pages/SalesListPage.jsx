@@ -53,4 +53,48 @@ export default function SalesListPage() {
     useEffect(() => {
         fetchSales(1);
     }, [statusFilter]);
-}
+
+    // Handlers //
+    const handleStatusChange = (e) => {
+        setStatusFilter(e.target.value);
+      };
+    
+      const handlePageChange = (newPage) => {
+        if (
+          newPage < 1 ||
+          newPage > (pagination.totalPages || 1)
+        )
+          return;
+        fetchSales(newPage);
+      };
+
+      /**
+       * Create invoice from a sale
+       * 
+       * -send POST /api/invoices with {saleId}
+       * backend:
+       *    -validate sale
+       *    - creates invoice with status 'draft'
+       * - on success: show success message
+       */
+      const handleCreateInvoice = async (saleId) => {
+        try {
+          setError('');
+          setSuccessMessage('');
+          setCreatingInvoiceId(saleId);
+    
+          // For now we only send saleId; taxPercentage/notes optional
+          await invoiceApi.createInvoiceFromSale({ saleId });
+    
+          setSuccessMessage('Invoice created successfully from sale.');
+        } catch (err) {
+          console.error('Error creating invoice from sale:', err);
+          const msg =
+            err.response?.data?.message ||
+            'Failed to create invoice from sale.';
+          setError(msg);
+        } finally {
+          setCreatingInvoiceId(null);
+        }
+      };
+};
