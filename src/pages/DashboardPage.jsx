@@ -110,6 +110,12 @@ export default function DashboardPage() {
             New Sale
           </Link>
           <Link
+            to="/sales"
+            className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
+          >
+            Sales
+          </Link>
+          <Link
             to="/products"
             className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
           >
