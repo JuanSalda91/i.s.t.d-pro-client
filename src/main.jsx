@@ -10,6 +10,7 @@ import DashboardPage from "./pages/DashboardPage";
 import ProductForm from "./pages/ProductForm.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import ProductsListPage from "./pages/ProductsListPage.jsx";
+import ProductEditPage from "./pages/ProductEditPage.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -31,6 +32,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
           {/* Product List */}
           <Route path="/products" element={<ProductsListPage />} />
+
+          {/* Edit Products */}
+          <Route path="/products/edit/:id" element={<ProductEditPage />} />
 
           </Route>
         </Routes>
