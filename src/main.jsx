@@ -9,7 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProductForm from "./pages/ProductForm.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
-import ProductListPage from "./pages/ProductsListPage.jsx";
+import ProductsListPage from "./pages/ProductsListPage.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
