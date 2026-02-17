@@ -49,6 +49,7 @@ export default function ProductsListPage() {
     //Effects
     useEffect(() => {
         fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchQuery, categoryFilter]);
 
     //Event Handlers
