@@ -102,6 +102,50 @@ export default function ProductEditPage() {
         return Object.keys(newErrors).length === 0;
     };
 
-    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+        if (!validate()) return;
+
+        setSaving(true);
+        try {
+            const payload = {
+                sku: form.sku.toUpperCase(),
+                name: form.name.trim(),
+                description: form.description || '',
+                category: form.category || 'Others',
+                price: Number(form.price),
+                cost: Number(form.cost),
+                stock: Number(form.stock),
+                minStock: form.minStock === '' ? 10 : Number(form.minStock),
+                supplier: form.supplier || '',
+            };
+
+            await productApi.updateProduct(id, payload);
+
+            setSuccess('Product updated successfully');
+            setErrors({});
+            setTimeout(() => navigate('/products'), 800);
+        } catch (err) {
+            const backendMessage = err.response?.data?.message;
+
+            if ( backendMessage && backendMessage.toLowerCase().includes('sku') ) {
+                setErrors((prev) => ({ ...prev, sku: backendMessage }));
+            } else {
+                setError(backendMessage || 'Failed to update product');
+            }
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return (
+          <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+            <div className="text-slate-600 text-sm">Loading product...</div>
+          </div>
+        );
+      }
 
 };
