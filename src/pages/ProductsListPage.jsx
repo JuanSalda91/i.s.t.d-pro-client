@@ -104,13 +104,13 @@ export default function ProductsListPage() {
             <div className="flex gap-3">
               <Link
                 to="/products/new"
-                className="px-3 py-1 text-xs rounded bg-slate-800 text-white hover:bg-slate-900"
+                className="px-3 py-1 text-xs rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 New product
               </Link>
               <Link
                 to="/"
-                className="px-3 py-1 text-xs rounded bg-slate-200 text-slate-800 hover:bg-slate-300"
+                className="px-3 py-1 text-xs rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 Dashboard
               </Link>

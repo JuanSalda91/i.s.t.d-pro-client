@@ -105,26 +105,26 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             to="/sales/new"
-            className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
+            className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
           >
             New Sale
           </Link>
           <Link
             to="/products"
-            className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
+            className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
           >
             View Products
           </Link>
           <Link
             to="/products/new"
-            className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
+            className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
           >
             New Product
           </Link>
           <span className="text-sm text-slate-600">{user?.email}</span>
           <button
             onClick={logout}
-            className="px-3 py-1 text-xs rounded bg-slate-800 text-white hover:bg-slate-900"
+            className="px-3 py-1 text-xs rounded bg-green-600 hover:bg-green-700 disabled:opacity-60 text-slate-800 text-white"
           >
             Logout
           </button>
@@ -143,7 +143,7 @@ export default function DashboardPage() {
         {/* Revenue card */}
         <div className="bg-white rounded-lg shadow p-4">
           <h2 className="text-sm font-medium text-slate-500 mb-1">
-            Revenue (this year – latest month)
+            Revenue (This year – Latest month)
           </h2>
           <p className="text-2xl font-semibold text-slate-800">
             ${stats.monthlyRevenue.toFixed(2)}

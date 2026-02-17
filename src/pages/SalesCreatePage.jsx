@@ -215,7 +215,7 @@ export default function SalesCreatePage() {
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="px-3 py-1 text-xs rounded bg-slate-200 text-slate-800 hover:bg-slate-300"
+            className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
           >
             Dashboard
           </button>
@@ -317,7 +317,7 @@ export default function SalesCreatePage() {
             <button
               type="button"
               onClick={addItemRow}
-              className="px-2 py-1 text-xs rounded bg-slate-800 text-white hover:bg-slate-900"
+              className="px-3 py-1 text-xs rounded bg-green-600 hover:bg-green-700 disabled:opacity-60 text-slate-800 text-white"
             >
               Add item
             </button>
@@ -454,7 +454,7 @@ export default function SalesCreatePage() {
         <button
           type="submit"
           disabled={saving}
-          className="px-4 py-2 bg-slate-800 text-white text-sm rounded hover:bg-slate-900 disabled:opacity-50"
+          className="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 disabled:opacity-50"
         >
           {saving ? "Saving sale…" : "Create sale"}
         </button>

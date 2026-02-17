@@ -269,14 +269,14 @@ export default function ProductCreatePage() {
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 mr-1 bg-slate-800 text-white text-sm rounded hover:bg-slate-900 disabled:opacity-50"
+            className="px-4 py-2 mr-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 disabled:opacity-50"
           >
             {loading ? 'Saving…' : 'Create product'}
           </button>
           <button
             type="button"
             onClick={handleBackToDashboard}
-            className="px-4 py-2 ml-40 bg-slate-200 text-slate-800 text-sm rounded hover:bg-slate-300"
+            className="px-4 py-2 ml-40 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
           >
             Back to dashboard
           </button>
