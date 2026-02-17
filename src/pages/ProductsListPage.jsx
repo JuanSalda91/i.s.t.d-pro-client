@@ -70,11 +70,22 @@ export default function ProductsListPage() {
     };
 
     const handleDelete = async (productId) => {
-        if (!window.confirm('Are you sure you want to delete this product?')) {
-            return;
+        const confirmed = window.confirm(
+          'Are you sure you want to delete this product?'
+        );
+        if (!confirmed) return;
+      
+        try {
+          await productApi.deleteProduct(productId);
+          // After successful delete, refetch products
+          await fetchProducts();
+        } catch (err) {
+          console.error('Error deleting product:', err);
+          const msg =
+            err.response?.data?.message || 'Failed to delete product';
+          setError(msg);
         }
-        alert('Delete functionality coming next!');
-    };
+      };
 
     //Render
     if (loading) {
