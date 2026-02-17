@@ -66,7 +66,7 @@ export default function ProductEditPage() {
 
     //Handlers
     const handleChange = (e) => {
-        const { name, value } = e.targer;
+        const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value}));
     };
 
@@ -148,4 +148,186 @@ export default function ProductEditPage() {
         );
       }
 
+      return (
+        <div className="min-h-screen bg-slate-50 p-6">
+          <header className="flex items-center justify-between mb-6">
+            <h1 className="text-xl font-semibold text-slate-800">
+              Edit Product
+            </h1>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => navigate('/products')}
+                className="px-3 py-1 text-xs rounded bg-slate-200 text-slate-800 hover:bg-slate-300"
+              >
+                Back to products
+              </button>
+            </div>
+          </header>
+    
+          {error && (
+            <div className="mb-3 text-sm text-red-600">{error}</div>
+          )}
+          {success && (
+            <div className="mb-3 text-sm text-green-600">{success}</div>
+          )}
+    
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-3 max-w-md bg-white p-4 rounded shadow"
+          >
+            {/* The fields are almost identical to ProductCreatePage, just using form state */}
+            {/* SKU */}
+            <div>
+              <input
+                name="sku"
+                value={form.sku}
+                onChange={handleChange}
+                placeholder="SKU"
+                className={`border p-2 w-full text-sm ${
+                  errors.sku ? 'border-red-500' : 'border-slate-300'
+                }`}
+              />
+              {errors.sku && (
+                <p className="mt-1 text-xs text-red-600">{errors.sku}</p>
+              )}
+            </div>
+    
+            {/* Name */}
+            <div>
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Name"
+                className={`border p-2 w-full text-sm ${
+                  errors.name ? 'border-red-500' : 'border-slate-300'
+                }`}
+              />
+              {errors.name && (
+                <p className="mt-1 text-xs text-red-600">{errors.name}</p>
+              )}
+            </div>
+    
+            {/* Description */}
+            <div>
+              <textarea
+                name="description"
+                value={form.description}
+                onChange={handleChange}
+                placeholder="Description"
+                className="border border-slate-300 p-2 w-full text-sm"
+              />
+            </div>
+    
+            {/* Category */}
+            <div>
+              <select
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                className="border border-slate-300 p-2 w-full text-sm"
+              >
+                <option value="">Select category</option>
+                <option>Electronics</option>
+                <option>Clothing</option>
+                <option>Food</option>
+                <option>Home</option>
+                <option>Others</option>
+              </select>
+            </div>
+    
+            {/* Price */}
+            <div>
+              <input
+                name="price"
+                type="number"
+                step="0.01"
+                value={form.price}
+                onChange={handleChange}
+                placeholder="Price"
+                className={`border p-2 w-full text-sm ${
+                  errors.price ? 'border-red-500' : 'border-slate-300'
+                }`}
+              />
+              {errors.price && (
+                <p className="mt-1 text-xs text-red-600">{errors.price}</p>
+              )}
+            </div>
+    
+            {/* Cost */}
+            <div>
+              <input
+                name="cost"
+                type="number"
+                step="0.01"
+                value={form.cost}
+                onChange={handleChange}
+                placeholder="Cost"
+                className={`border p-2 w-full text-sm ${
+                  errors.cost ? 'border-red-500' : 'border-slate-300'
+                }`}
+              />
+              {errors.cost && (
+                <p className="mt-1 text-xs text-red-600">{errors.cost}</p>
+              )}
+            </div>
+    
+            {/* Stock */}
+            <div>
+              <input
+                name="stock"
+                type="number"
+                value={form.stock}
+                onChange={handleChange}
+                placeholder="Stock"
+                className={`border p-2 w-full text-sm ${
+                  errors.stock ? 'border-red-500' : 'border-slate-300'
+                }`}
+              />
+              {errors.stock && (
+                <p className="mt-1 text-xs text-red-600">{errors.stock}</p>
+              )}
+            </div>
+    
+            {/* Min stock */}
+            <div>
+              <input
+                name="minStock"
+                type="number"
+                value={form.minStock}
+                onChange={handleChange}
+                placeholder="Min stock"
+                className={`border p-2 w-full text-sm ${
+                  errors.minStock ? 'border-red-500' : 'border-slate-300'
+                }`}
+              />
+              {errors.minStock && (
+                <p className="mt-1 text-xs text-red-600">
+                  {errors.minStock}
+                </p>
+              )}
+            </div>
+    
+            {/* Supplier */}
+            <div>
+              <input
+                name="supplier"
+                value={form.supplier}
+                onChange={handleChange}
+                placeholder="Supplier"
+                className="border border-slate-300 p-2 w-full text-sm"
+              />
+            </div>
+    
+            <button
+              type="submit"
+              disabled={saving}
+              className="px-4 py-2 bg-slate-800 text-white text-sm rounded hover:bg-slate-900 disabled:opacity-50"
+            >
+              {saving ? 'Saving…' : 'Save changes'}
+            </button>
+          </form>
+        </div>
+      );
 };
