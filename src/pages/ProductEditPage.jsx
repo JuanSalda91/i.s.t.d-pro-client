@@ -64,4 +64,44 @@ export default function ProductEditPage() {
         fetchProduct();
     }, [id]);
 
+    //Handlers
+    const handleChange = (e) => {
+        const { name, value } = e.targer;
+        setForm((prev) => ({ ...prev, [name]: value}));
+    };
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (!form.sku.trim()) newErrors.sku = 'SKU is required';
+        if (!form.name.trim()) newErrors.name = 'Name is required';
+
+        if (form.price === '' || isNaN(Number(form.price))) {
+            newErrors.price = 'Price is required';
+        } else if (Number(form.price) < 0) {
+            newErrors.price = 'Price cannot be negative';
+        }
+
+        if (form.cost === '' || isNaN(Number(form.cost))) {
+            newErrors.cost = 'Cost is required';
+        } else if (Number(form.cost) < 0) {
+            newErrors.cost = 'Cost cannot be negative';
+        }
+
+        if (form.stock === '' || isNaN(Number(form.stock))) {
+            newErrors.stock = 'Stock is required';
+        } else if (Number(form.stock) < 0) {
+            newErrors.stock = 'Stock cannot be negative';
+        }
+
+        if (form.minStock !== '' && Number(form.minStock) < 0) {
+            newErrors.minStock = 'Min stock cannot be negative';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    
+
 };
