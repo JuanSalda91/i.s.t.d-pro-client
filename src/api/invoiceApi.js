@@ -14,6 +14,6 @@ export const invoiceApi = {
     //Download PDF
     downloadInvoicePdf: (id) =>
         axiosClient.get(`/invoices/${id}/pdf`, {
-            responseType: 'blob',
-        });
+          responseType: 'blob',
+        }),
 };
