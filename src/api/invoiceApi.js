@@ -1,4 +1,4 @@
-import axiosClient from './axiosClient';
+import axiosClient from './axiosClient.js';
 
 export const invoiceApi = {
   // Create an invoice from a sale
