@@ -104,6 +104,12 @@ export default function DashboardPage() {
         </h1>
         <div className="flex items-center gap-3">
           <Link
+            to="/sales/new"
+            className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
+          >
+            New sale
+          </Link>
+          <Link
             to="/products"
             className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
           >
