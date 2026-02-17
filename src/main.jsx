@@ -12,6 +12,7 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import ProductsListPage from "./pages/ProductsListPage.jsx";
 import ProductEditPage from "./pages/ProductEditPage.jsx";
 import SalesCreatePage from "./pages/SalesCreatePage.jsx";
+import SalesListPage from "./pages/SalesListPage.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -38,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/products/edit/:id" element={<ProductEditPage />} />
 
           {/* Sales */}
+          <Route path="/sales" element={<SalesListPage />} />
           <Route path ="/sales/new" element={<SalesCreatePage />} />
 
           </Route>
