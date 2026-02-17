@@ -44,4 +44,31 @@ export default function ProductsListPage() {
             setLoading(false);
         }
     };
+
+    //Effects
+    useEffect(() => {
+        fetchProducts();
+    }, [searchQuery, categoryFilter]);
+
+    //Event Handlers
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleCategoryChange = (e) => {
+        setCategoryFilter(e.target.value)
+    };
+
+    const hanldeEdit = (productId) => {
+        navigate(`/products/edit/${productId}`);
+    };
+
+    const handleDetele = async (productId) => {
+        if (!window.confirm('Are you sure you want to delete this product?')) {
+            return;
+        }
+        alert('Delete functionality coming next!');
+    };
+
+    //Render
 };
