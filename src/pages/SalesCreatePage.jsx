@@ -96,4 +96,51 @@ export default function SalesCreatePage() {
     const removeItemRow = (index) => {
         setItems((prev) => prev.filter((_, i) => i !== index));
     };
+
+    // Validation //
+    const validate = () => {
+        const errors = {};
+
+        if (!customer.customerName.trim()) {
+            errors.customerName = 'Customer name is required';
+        }
+
+        if (!customer.customerEmail.trim()) {
+            error.customerEmail = 'Customer email is required';
+        } else if (!/.+@.+\..+/.test(customer.customerEmail.trim())) {
+            error.customerEmail = 'Please enter a valid email';
+        }
+
+        if (taxPercentage < 0 || taxPercentage > 100) {
+            error.taxPercentage = 'Tax must be between 0 and 100';
+        }
+
+        // validate itmes: at least on valid item
+        if (!items || items.length === 0) {
+            errors.items = 'Add at least one item';
+        } else {
+            const itemErrors = [];
+            items.forEach((item, index) => {
+                const ie = {};
+                if (!item.productId) {
+                    ie.productId = 'Select a product';
+                }
+                if (!item.quantity || Number(item.quantity) <= 0) {
+                    ie.quantity = 'Quantity must be at least 1';
+                }
+                if (item.unitPrice === '' || Number(item.unitPrice) < 0) {
+                    ie.unitPrice = 'Unit price must be 0 or more';
+                }
+                itemErrors[index] = ie;
+            });
+
+            //Only add itemErrors if there is at least one error
+            if (itemErrors.some((ie) => Object.keys(ie || {}).length > 0)) {
+                errors.itemErrors = itemErrors;
+            }
+        }
+
+        setFieldErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
 };
