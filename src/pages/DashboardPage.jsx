@@ -107,19 +107,19 @@ export default function DashboardPage() {
             to="/sales/new"
             className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
           >
-            New sale
+            New Sale
           </Link>
           <Link
             to="/products"
             className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
           >
-            View products
+            View Products
           </Link>
           <Link
             to="/products/new"
             className="px-3 py-1 text-xs rounded bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200"
           >
-            New product
+            New Product
           </Link>
           <span className="text-sm text-slate-600">{user?.email}</span>
           <button
@@ -168,7 +168,7 @@ export default function DashboardPage() {
         {/* Low stock card */}
         <div className="bg-white rounded-lg shadow p-4">
           <h2 className="text-sm font-medium text-slate-500 mb-1">
-            Low stock products
+            Low Stock Products
           </h2>
           <p className="text-2xl font-semibold text-slate-800">
             {stats.lowStockCount}
