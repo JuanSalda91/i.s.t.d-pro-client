@@ -143,4 +143,56 @@ export default function SalesCreatePage() {
         setFieldErrors(errors);
         return Object.keys(errors).length === 0;
     };
+
+    // Submit Handler //
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        if (!validate()) return;
+
+        setSaving(true);
+        try {
+            //Build items payload matching createsale expectations
+            const payloadItems = items.map((item) => ({
+                productId: item.productId,
+                quantity: Number(item.quantity),
+                unitPrice: Number(item.unitPrice),
+            }));
+
+            const payload = {
+                customerName: customer.customerName.trim();
+                customerEmail: customer.customerEmail.trim();
+                customerPhoe: customer.customerPhone.trim();
+                taxPercentage: taxPercentage,
+                items: payloadItems,
+            };
+
+            const res = await salesApi.createSale(payload);
+
+            setSuccess('Sale created successfully');
+            setFieldErrors({});
+
+            //reset form for next sale
+            setCustomer({
+                customerName: '',
+                customerEmail: '',
+                customerPhone: '',
+                taxPercentage: 0,
+            });
+            setItems([{ productId: '', quantity: 1, unitPrice: 0 }]);
+            //navigate to a sales list page
+            //setTimeout(() => navigate('/sales'), 800);
+        } catch (err) {
+            console.error('Error creating sale:', err);
+            const backendMessage = err.response?.data?.message;
+
+            setError(
+                backendMessage || 'Failed to creaete sale. please try again.'
+            );
+        } finally {
+            setSaving(false);
+        }
+    };
 };
