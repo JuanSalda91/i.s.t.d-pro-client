@@ -60,4 +60,40 @@ export default function SalesCreatePage() {
         };
         fetchProducts();
     }, []);
+
+    //Helpers: total //
+    const computeSubtotal = () => {
+        return items.reduce((sum, item) => {
+            const qty = Number(item.quantity) || 0;
+            const price = Number(item.unitPrice) || 0;
+            return sum + qty * price;
+        }, 0);
+    };
+
+    const subtotal = computeSubtotal();
+    const taxPercentage = Number(customer.taxPercentage) || 0;
+    const taxAmount = (subtotal * taxPercentage) / 100;
+    const totalAmount = subtotal + taxAmount;
+
+    // Handlers //
+    const handleCustomerChange = (e) => {
+        const { name, value } = e.target;
+        setCustomer((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleItemChange = (index, field, value) => {
+        setItems((prev) => {
+            const updated = [...prev];
+            updated[index] = { ...updated[index], [field]: value};
+            return updated;
+        });
+    };
+
+    const addItemRow = () => {
+        setItems((prev) => [ ...prev, { productId: '', quantity: 1, unitPrice: 0 },]);
+    };
+
+    const removeItemRow = (index) => {
+        setItems((prev) => prev.filter((_, i) => i !== index));
+    };
 };
