@@ -16,4 +16,7 @@ export const salesApi = {
 
     //Get single sale by ID
     getSaleById: (id) => axiosClient.get(`/sales/:${id}`),
+
+    //update sale
+    updateSale: (id, data) => axiosClient.put(`/sales/${id}`, data),
 };
