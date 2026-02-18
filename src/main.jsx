@@ -15,6 +15,7 @@ import ProductEditPage from "./pages/ProductEditPage.jsx";
 import SalesCreatePage from "./pages/SalesCreatePage.jsx";
 import SalesListPage from "./pages/SalesListPage.jsx";
 import InvoicesListPage from "./pages/InvoicesListPage.jsx";
+import ReportsPage from "./pages/ReportsPage.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/sales"               element={<SalesListPage />} />
               <Route path="/sales/new"           element={<SalesCreatePage />} />
               <Route path="/invoices"            element={<InvoicesListPage />} />
+              <Route path="/reports"             element={<ReportsPage />} /> 
             </Route>
           </Route>
         </Routes>
