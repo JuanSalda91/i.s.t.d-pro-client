@@ -18,4 +18,7 @@ export const invoiceApi = {
 
   //Update invoices
   updateInvoice: (id, data) => axiosClient.put(`/invoices/${id}`, data),
+
+  //delete invoice
+  deleteInvoice: (id) => axiosClient.delete(`/invoices/${id}`),
 };
