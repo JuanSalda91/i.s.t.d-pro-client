@@ -19,4 +19,7 @@ export const salesApi = {
 
     //update sale
     updateSale: (id, data) => axiosClient.put(`/sales/${id}`, data),
+
+    //delete sale
+    deleteSale: (id) => axiosClient.delete(`/sales/${id}`),
 };
