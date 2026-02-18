@@ -24,6 +24,7 @@ export default function InvoicesListPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [editingStatus, setEditingStatus] = useState({});
   const [savingStatusId, setSavingStatusId] = useState();
+  const [editingPaymentMethod, setEditingPaymentMethod] = useState({});
 
   //fetch invoices from API
   const fetchInvoices = async (page = 1) => {
@@ -48,12 +49,15 @@ export default function InvoicesListPage() {
         },
       );
 
-      // init editingStatus
+      // init editingStatus & payment method
       const initialStatus = {};
+      const initialPaymentMethod = {};
       list.forEach((inv) => {
         initialStatus[inv._id] = inv.status;
+        initialPaymentMethod[inv._id] = inv.editingPaymentMethod;
       });
       setEditingStatus(initialStatus);
+      setEditingPaymentMethod(initialPaymentMethod);
     } catch (err) {
       console.error("Error fetching invoices:", err);
       const msg = err.response?.data?.message || "Failed to load invoices";
@@ -79,10 +83,17 @@ export default function InvoicesListPage() {
     }));
   };
 
+  const handlePaymentMethodChange = (invoiceId, method) => {
+    setEditingPaymentMethod((prev) => ({
+      ...prev,
+      [invoiceId]: method,
+    }));
+  };
+
   const handleSaveStatus = async (invoice) => {
     const newStatus = editingStatus[invoice._id];
     if (!newStatus || newStatus === invoice.status) {
-      return; // nothing to change
+      return;
     }
 
     try {
@@ -90,25 +101,20 @@ export default function InvoicesListPage() {
       setSuccessMessage("");
       setSavingStatusId(invoice._id);
 
-      // Basic payload: only status for now
       const payload = { status: newStatus };
 
-      // Later we can extend:
-      // if (newStatus === 'paid') {
-      //   payload.paymentDate = new Date().toISOString();
-      //   payload.paymentMethod = 'cash'; // or from UI
-      // }
+      // If marking as paid, also send paymentDate + paymentMethod
+      if (newStatus === "paid") {
+        const method =
+          editingPaymentMethod[invoice._id] || invoice.paymentMethod || "cash";
+        payload.paymentMethod = method;
+        payload.paymentDate = new Date().toISOString();
+      }
 
-      const res = await invoiceApi.updateInvoice(invoice._id, payload);
+      await invoiceApi.updateInvoice(invoice._id, payload);
 
-      // Update local invoices list with returned invoice
-      const updated = res.data.invoice || res.data; // depends on controller shape
-      setInvoices((prev) =>
-        prev.map((inv) =>
-          inv._id === updated._id ? { ...inv, ...updated } : inv,
-        ),
-      );
-
+      // Backend returns only { message }, so refetch invoices to be safe
+      await fetchInvoices(pagination.currentPage);
       setSuccessMessage("Invoice status updated.");
     } catch (err) {
       console.error("Error updating invoice status:", err);
@@ -273,7 +279,7 @@ export default function InvoicesListPage() {
                       ${Number(inv.totalAmount || 0).toFixed(2)}
                     </td>
                     <td className="px-4 py-3 text-slate-700">
-                      {/* Badge for current status */}
+                      {/* Badge */}
                       <div className="mb-1">
                         <span
                           className={`px-2 py-1 rounded text-xs ${
@@ -285,36 +291,75 @@ export default function InvoicesListPage() {
                                   ? "bg-orange-100 text-orange-700"
                                   : inv.status === "sent"
                                     ? "bg-blue-100 text-blue-700"
-                                    : "bg-slate-100 text-slate-700" // draft
+                                    : "bg-slate-100 text-slate-700"
                           }`}
                         >
                           {inv.status}
                         </span>
                       </div>
 
-                      {/* Inline status editor */}
-                      <div className="flex items-center gap-1">
-                        <select
-                          value={editingStatus[inv._id] || inv.status}
-                          onChange={(e) =>
-                            handleStatusSelectChange(inv._id, e.target.value)
-                          }
-                          className="border border-slate-300 rounded px-1 py-0.5 text-[11px]"
-                        >
-                          <option value="draft">Draft</option>
-                          <option value="sent">Sent</option>
-                          <option value="paid">Paid</option>
-                          <option value="overdue">Overdue</option>
-                          <option value="cancelled">Cancelled</option>
-                        </select>
-                        <button
-                          type="button"
-                          onClick={() => handleSaveStatus(inv)}
-                          disabled={savingStatusId === inv._id}
-                          className="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-white hover:bg-slate-900 disabled:opacity-50"
-                        >
-                          {savingStatusId === inv._id ? "Saving…" : "Save"}
-                        </button>
+                      {/* Editor */}
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-1">
+                          <select
+                            value={editingStatus[inv._id] || inv.status}
+                            onChange={(e) =>
+                              handleStatusSelectChange(inv._id, e.target.value)
+                            }
+                            className="border border-slate-300 rounded px-1 py-0.5 text-[11px]"
+                          >
+                            <option value="draft">Draft</option>
+                            <option value="sent">Sent</option>
+                            <option value="paid">Paid</option>
+                            <option value="overdue">Overdue</option>
+                            <option value="cancelled">Cancelled</option>
+                          </select>
+                          <button
+                            type="button"
+                            onClick={() => handleSaveStatus(inv)}
+                            disabled={savingStatusId === inv._id}
+                            className="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-white hover:bg-slate-900 disabled:opacity-50"
+                          >
+                            {savingStatusId === inv._id ? "Saving…" : "Save"}
+                          </button>
+                        </div>
+
+                        {/* Show payment method selector only when new status is 'paid' */}
+                        {(editingStatus[inv._id] || inv.status) === "paid" && (
+                          <div className="flex items-center gap-1">
+                            <span className="text-[10px] text-slate-500">
+                              Payment method:
+                            </span>
+                            <select
+                              value={editingPaymentMethod[inv._id] || ""}
+                              onChange={(e) =>
+                                handlePaymentMethodChange(
+                                  inv._id,
+                                  e.target.value,
+                                )
+                              }
+                              className="border border-slate-300 rounded px-1 py-0.5 text-[11px]"
+                            >
+                              <option value="">Select</option>
+                              <option value="cash">Cash</option>
+                              <option value="credit_card">Credit card</option>
+                              <option value="bank_transfer">
+                                Bank transfer
+                              </option>
+                              <option value="check">Check</option>
+                              <option value="other">Other</option>
+                            </select>
+                          </div>
+                        )}
+
+                        {/* Optional: show existing payment info */}
+                        {inv.paymentDate && (
+                          <div className="text-[10px] text-slate-500">
+                            Paid on{" "}
+                            {new Date(inv.paymentDate).toLocaleDateString()} by{" "}
+                            {inv.paymentMethod || "unknown"}
+                          </div>
+                        )}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-slate-600">
