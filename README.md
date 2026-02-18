@@ -1,4 +1,4 @@
-# 🧭 I.S.T.D PRO — Inventory & Sales Tracker Dashboard (Frontend)
+# 🧭 I.S.T.D PRO — Inventory & Sales Tracker Dashboard
 
 I.S.T.D PRO (Inventory & Sales Tracker Dashboard) is a modern web application built to help businesses efficiently manage their inventory, sales, and invoicing workflows through an intuitive, data-driven interface.
 
