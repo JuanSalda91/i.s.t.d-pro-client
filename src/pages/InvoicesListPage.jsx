@@ -1,4 +1,4 @@
-import { useEffec, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { invoiceApi } from '../api/invoiceApi';
 
@@ -56,7 +56,6 @@ export default function InvoicesListPage() {
     
       useEffect(() => {
         fetchInvoices(1);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
       // Handlers //
@@ -119,9 +118,7 @@ export default function InvoicesListPage() {
       ? invoices.filter((inv) => inv.status === statusFilter)
       : invoices;
   
-    // ==========================
-    // Render
-    // ==========================
+    // Render //
     if (loading && invoices.length === 0) {
       return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center">
@@ -131,4 +128,181 @@ export default function InvoicesListPage() {
         </div>
       );
     }
+
+    return (
+        <div className="min-h-screen bg-slate-50 p-6">
+          {/* Header */}
+          <header className="flex items-center justify-between mb-6">
+            <h1 className="text-xl font-semibold text-slate-800">
+              Invoices
+            </h1>
+            <div className="flex gap-3">
+              <Link
+                to="/sales"
+                className="px-3 py-1 text-xs rounded bg-slate-200 text-slate-800 hover:bg-slate-300"
+              >
+                Sales
+              </Link>
+              <Link
+                to="/"
+                className="px-3 py-1 text-xs rounded bg-slate-200 text-slate-800 hover:bg-slate-300"
+              >
+                Dashboard
+              </Link>
+            </div>
+          </header>
+    
+          {/* Alerts */}
+          {error && (
+            <div className="mb-3 text-sm text-red-600">{error}</div>
+          )}
+          {successMessage && (
+            <div className="mb-3 text-sm text-green-600">
+              {successMessage}
+            </div>
+          )}
+    
+          {/* Filters */}
+          <section className="mb-4 flex gap-3 items-center">
+            <label className="text-xs text-slate-500">Status</label>
+            <select
+              value={statusFilter}
+              onChange={handleStatusChange}
+              className="border border-slate-300 rounded px-3 py-2 text-sm"
+            >
+              <option value="">All</option>
+              <option value="draft">Draft</option>
+              <option value="sent">Sent</option>
+              <option value="paid">Paid</option>
+              <option value="overdue">Overdue</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </section>
+    
+          {/* Invoices table */}
+          <section className="bg-white rounded-lg shadow overflow-hidden">
+            {visibleInvoices.length === 0 ? (
+              <div className="p-6 text-center text-sm text-slate-500">
+                No invoices found.
+              </div>
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="bg-slate-100 border-b">
+                  <tr>
+                    <th className="text-left px-4 py-3 font-medium text-slate-700">
+                      Invoice #
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-slate-700">
+                      Customer
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-slate-700">
+                      Email
+                    </th>
+                    <th className="text-right px-4 py-3 font-medium text-slate-700">
+                      Total
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-slate-700">
+                      Status
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-slate-700">
+                      Created
+                    </th>
+                    <th className="text-center px-4 py-3 font-medium text-slate-700">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleInvoices.map((inv) => {
+                    const date = inv.createdAt
+                      ? new Date(inv.createdAt)
+                      : null;
+                    const formattedDate = date
+                      ? date.toLocaleDateString()
+                      : '-';
+    
+                    return (
+                      <tr key={inv._id} className="border-b">
+                        <td className="px-4 py-3 text-slate-800">
+                          {inv.invoiceNumber}
+                        </td>
+                        <td className="px-4 py-3 text-slate-800">
+                          {inv.customerName}
+                        </td>
+                        <td className="px-4 py-3 text-slate-600">
+                          {inv.customerEmail}
+                        </td>
+                        <td className="px-4 py-3 text-right text-slate-800">
+                          ${Number(inv.totalAmount || 0).toFixed(2)}
+                        </td>
+                        <td className="px-4 py-3 text-slate-700">
+                          <span
+                            className={`px-2 py-1 rounded text-xs ${
+                              inv.status === 'paid'
+                                ? 'bg-green-100 text-green-700'
+                                : inv.status === 'cancelled'
+                                ? 'bg-red-100 text-red-700'
+                                : inv.status === 'overdue'
+                                ? 'bg-orange-100 text-orange-700'
+                                : inv.status === 'sent'
+                                ? 'bg-blue-100 text-blue-700'
+                                : 'bg-slate-100 text-slate-700' // draft
+                            }`}
+                          >
+                            {inv.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-slate-600">
+                          {formattedDate}
+                        </td>
+                        <td className="px-4 py-3 text-center">
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadPdf(inv)}
+                            disabled={downloadingId === inv._id}
+                            className="text-xs px-2 py-1 rounded bg-slate-800 text-white hover:bg-slate-900 disabled:opacity-50"
+                          >
+                            {downloadingId === inv._id
+                              ? 'Downloading...'
+                              : 'Download PDF'}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </section>
+    
+          {/* Optional: pagination controls if backend supports it */}
+          {pagination.totalPages > 1 && (
+            <div className="mt-4 flex justify-end items-center gap-3 text-xs text-slate-600">
+              <button
+                onClick={() =>
+                  handlePageChange(pagination.currentPage - 1)
+                }
+                disabled={pagination.currentPage <= 1}
+                className="px-2 py-1 border rounded disabled:opacity-50"
+              >
+                Prev
+              </button>
+              <span>
+                Page {pagination.currentPage} of {pagination.totalPages}
+              </span>
+              <button
+                onClick={() =>
+                  handlePageChange(pagination.currentPage + 1)
+                }
+                disabled={
+                  pagination.currentPage >= pagination.totalPages
+                }
+                className="px-2 py-1 border rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </div>
+      );
 };
