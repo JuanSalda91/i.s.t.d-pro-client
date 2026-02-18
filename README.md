@@ -6,7 +6,9 @@ This repository contains the frontend built with Vite, React, Tailwind CSS, and 
 
 ## Deployment with Vercel:
 
-[i-s-t-d-pro-client-b4smo8k3r-juansaldas-projects.vercel.app](https://istdproclient.vercel.app/login)
+[https://istdproclient.vercel.app/login](https://istdproclient.vercel.app/login)
+
+## Dashboard  
 
 ![I.S.T.D PRO Dashboard](public/ISTDPRO.png)
 
