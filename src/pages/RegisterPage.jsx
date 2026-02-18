@@ -83,106 +83,276 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100">
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
-        <h1 className="text-2xl font-semibold mb-6 text-center text-slate-800">
-          Registration
-        </h1>
+    <div
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0f1b3d 0%, #1a2f6b 50%, #0d2247 100%)' }}
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full opacity-10"
+          style={{ background: 'radial-gradient(circle, #3B5CD4, transparent)' }} />
+        <div className="absolute -bottom-40 -right-20 w-80 h-80 rounded-full opacity-10"
+          style={{ background: 'radial-gradient(circle, #3A96D4, transparent)' }} />
+        <div className="absolute top-1/3 right-1/3 w-px h-64 opacity-10 rotate-12"
+          style={{ background: 'linear-gradient(to bottom, transparent, #3A96D4, transparent)' }} />
+        <div className="absolute bottom-1/3 left-1/3 w-px h-48 opacity-10 -rotate-12"
+          style={{ background: 'linear-gradient(to bottom, transparent, #3B5CD4, transparent)' }} />
+      </div>
 
-        {error && <div className="mb-3 text-sm text-red-600">{error}</div>}
+      <div className="w-full max-w-md mx-4 relative z-10">
 
-        <form onSubmit={handleSubmit} className="space-y-3">
-          {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Name
-            </label>
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Full name"
-              className={`w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 ${
-                errors.name ? "border-red-500" : "border-slate-300"
-              }`}
-            />
-            {errors.name && (
-              <p className="mt-1 text-xs text-red-600">{errors.name}</p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Email
-            </label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Email"
-              className={`w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 ${
-                errors.email ? "border-red-500" : "border-slate-300"
-              }`}
-            />
-            {errors.email && (
-              <p className="mt-1 text-xs text-red-600">{errors.email}</p>
-            )}
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Password
-            </label>
-            <input
-              name="password"
-              type="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="Password (min 6 characters)"
-              className={`w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 ${
-                errors.password ? "border-red-500" : "border-slate-300"
-              }`}
-            />
-            {errors.password && (
-              <p className="mt-1 text-xs text-red-600">{errors.password}</p>
-            )}
-          </div>
-
-          {/* Role (optional, can hide in UI if you want only admins) */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Role
-            </label>
-            <select
-              name="role"
-              value={form.role}
-              onChange={handleChange}
-              className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200"
-            >
-              <option value="employee">Employee</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-2 px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:opacity-50"
+        {/* Brand header */}
+        <div className="text-center mb-8">
+          <div
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+            style={{ background: 'linear-gradient(135deg, #3B5CD4, #3A96D4)' }}
           >
-            {loading ? "Creating account…" : "Register"}
-          </button>
-        </form>
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+          </div>
+          <h2 className="text-white text-xl font-semibold tracking-wide">I.S.T.D PRO</h2>
+          <p className="text-sm mt-1" style={{ color: '#7ea8d4' }}>Create your account</p>
+        </div>
 
-        <p className="mt-4 text-xs text-slate-600 text-center">
-          Already have an account?{" "}
+        {/* Card */}
+        <div
+          className="rounded-2xl p-8 shadow-2xl"
+          style={{
+            background: 'rgba(255,255,255,0.05)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255,255,255,0.1)',
+          }}
+        >
+          <h1 className="text-2xl font-bold text-white mb-1">Get started</h1>
+          <p className="text-sm mb-8" style={{ color: '#7ea8d4' }}>
+            Fill in your details to create an account
+          </p>
+
+          {/* Global error */}
+          {error && (
+            <div
+              className="mb-6 rounded-lg px-4 py-3 text-sm flex items-center gap-2"
+              style={{
+                background: 'rgba(229,57,53,0.15)',
+                border: '1px solid rgba(229,57,53,0.3)',
+                color: '#ff8a80',
+              }}
+            >
+              <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+
+            {/* Reusable input style helpers via inline handlers */}
+            {/* Name */}
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-widest mb-2"
+                style={{ color: '#7ea8d4' }}>
+                Full Name
+              </label>
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="John Smith"
+                className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 transition-all duration-200 focus:outline-none"
+                style={{
+                  background: errors.name ? 'rgba(229,57,53,0.1)' : 'rgba(255,255,255,0.07)',
+                  border: errors.name ? '1px solid rgba(229,57,53,0.5)' : '1px solid rgba(255,255,255,0.12)',
+                }}
+                onFocus={e => {
+                  if (!errors.name) {
+                    e.target.style.border = '1px solid #3A96D4';
+                    e.target.style.background = 'rgba(58,150,212,0.1)';
+                  }
+                }}
+                onBlur={e => {
+                  if (!errors.name) {
+                    e.target.style.border = '1px solid rgba(255,255,255,0.12)';
+                    e.target.style.background = 'rgba(255,255,255,0.07)';
+                  }
+                }}
+              />
+              {errors.name && (
+                <p className="mt-1.5 text-xs flex items-center gap-1" style={{ color: '#ff8a80' }}>
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {errors.name}
+                </p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-widest mb-2"
+                style={{ color: '#7ea8d4' }}>
+                Email Address
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="you@company.com"
+                className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 transition-all duration-200 focus:outline-none"
+                style={{
+                  background: errors.email ? 'rgba(229,57,53,0.1)' : 'rgba(255,255,255,0.07)',
+                  border: errors.email ? '1px solid rgba(229,57,53,0.5)' : '1px solid rgba(255,255,255,0.12)',
+                }}
+                onFocus={e => {
+                  if (!errors.email) {
+                    e.target.style.border = '1px solid #3A96D4';
+                    e.target.style.background = 'rgba(58,150,212,0.1)';
+                  }
+                }}
+                onBlur={e => {
+                  if (!errors.email) {
+                    e.target.style.border = '1px solid rgba(255,255,255,0.12)';
+                    e.target.style.background = 'rgba(255,255,255,0.07)';
+                  }
+                }}
+              />
+              {errors.email && (
+                <p className="mt-1.5 text-xs flex items-center gap-1" style={{ color: '#ff8a80' }}>
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {errors.email}
+                </p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-widest mb-2"
+                style={{ color: '#7ea8d4' }}>
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="Min. 6 characters"
+                className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 transition-all duration-200 focus:outline-none"
+                style={{
+                  background: errors.password ? 'rgba(229,57,53,0.1)' : 'rgba(255,255,255,0.07)',
+                  border: errors.password ? '1px solid rgba(229,57,53,0.5)' : '1px solid rgba(255,255,255,0.12)',
+                }}
+                onFocus={e => {
+                  if (!errors.password) {
+                    e.target.style.border = '1px solid #3A96D4';
+                    e.target.style.background = 'rgba(58,150,212,0.1)';
+                  }
+                }}
+                onBlur={e => {
+                  if (!errors.password) {
+                    e.target.style.border = '1px solid rgba(255,255,255,0.12)';
+                    e.target.style.background = 'rgba(255,255,255,0.07)';
+                  }
+                }}
+              />
+              {errors.password && (
+                <p className="mt-1.5 text-xs flex items-center gap-1" style={{ color: '#ff8a80' }}>
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {errors.password}
+                </p>
+              )}
+            </div>
+
+            {/* Role */}
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-widest mb-2"
+                style={{ color: '#7ea8d4' }}>
+                Role
+              </label>
+              <select
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                className="w-full rounded-xl px-4 py-3 text-sm transition-all duration-200 focus:outline-none appearance-none cursor-pointer"
+                style={{
+                  background: 'rgba(255,255,255,0.07)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  color: form.role ? '#ffffff' : '#64748b',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237ea8d4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 14px center',
+                  backgroundSize: '16px',
+                }}
+                onFocus={e => {
+                  e.target.style.border = '1px solid #3A96D4';
+                  e.target.style.background = 'rgba(58,150,212,0.1)';
+                  e.target.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233A96D4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`;
+                  e.target.style.backgroundRepeat = 'no-repeat';
+                  e.target.style.backgroundPosition = 'right 14px center';
+                  e.target.style.backgroundSize = '16px';
+                }}
+                onBlur={e => {
+                  e.target.style.border = '1px solid rgba(255,255,255,0.12)';
+                  e.target.style.background = 'rgba(255,255,255,0.07)';
+                  e.target.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237ea8d4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`;
+                  e.target.style.backgroundRepeat = 'no-repeat';
+                  e.target.style.backgroundPosition = 'right 14px center';
+                  e.target.style.backgroundSize = '16px';
+                }}
+              >
+                <option value="employee" style={{ background: '#1a2f6b', color: '#fff' }}>Employee</option>
+                <option value="admin"    style={{ background: '#1a2f6b', color: '#fff' }}>Admin</option>
+              </select>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl py-3 text-sm font-semibold text-white tracking-wide transition-all duration-200 mt-2"
+              style={{
+                background: loading
+                  ? 'rgba(59,92,212,0.5)'
+                  : 'linear-gradient(135deg, #3B5CD4, #3A96D4)',
+                boxShadow: loading ? 'none' : '0 4px 20px rgba(59,92,212,0.4)',
+              }}
+              onMouseEnter={e => {
+                if (!loading) e.currentTarget.style.boxShadow = '0 6px 28px rgba(59,92,212,0.6)';
+              }}
+              onMouseLeave={e => {
+                if (!loading) e.currentTarget.style.boxShadow = '0 4px 20px rgba(59,92,212,0.4)';
+              }}
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                  </svg>
+                  Creating account…
+                </span>
+              ) : 'Create Account'}
+            </button>
+          </form>
+        </div>
+
+        {/* Login link */}
+        <p className="text-center text-sm mt-6" style={{ color: '#7ea8d4' }}>
+          Already have an account?{' '}
           <Link
             to="/login"
-            className="text-slate-800 font-medium hover:underline"
+            className="font-semibold transition-colors duration-150"
+            style={{ color: '#3A96D4' }}
+            onMouseEnter={e => e.target.style.color = '#fff'}
+            onMouseLeave={e => e.target.style.color = '#3A96D4'}
           >
-            Log in
+            Sign in →
           </Link>
         </p>
       </div>
