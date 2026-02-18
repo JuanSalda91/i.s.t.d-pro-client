@@ -116,6 +116,12 @@ export default function DashboardPage() {
             Sales
           </Link>
           <Link
+            to="/invoices"
+            className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
+          >
+            Invoices
+          </Link>
+          <Link
             to="/products"
             className="px-3 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-slate-800 text-white"
           >
