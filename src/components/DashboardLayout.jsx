@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
  * It renders the shared Sidebar on the left and the current
  * route's page component on the right via <Outlet />.
  *
- * Usage in your router (e.g. App.jsx):
+ * Usage in your router (e.g. main.jsx):
  *
  *   <Route element={<DashboardLayout />}>
  *     <Route path="/"              element={<DashboardPage />} />
