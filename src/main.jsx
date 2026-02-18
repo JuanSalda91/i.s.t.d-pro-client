@@ -5,6 +5,7 @@ import "./index.css";
 
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardLayout from "./components/DashboardLayout";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProductForm from "./pages/ProductForm.jsx";
@@ -20,31 +21,21 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public route */}
-          <Route path="/login" element={<LoginPage />} />
-
-          {/*Register Route */}
+          {/* Public routes */}
+          <Route path="/login"    element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<DashboardPage />} />
-
-            {/* Register Products Route */}
-            <Route path="/products/new" element={<ProductForm />} />
-
-            {/* Product List */}
-            <Route path="/products" element={<ProductsListPage />} />
-
-            {/* Edit Products */}
-            <Route path="/products/edit/:id" element={<ProductEditPage />} />
-
-            {/* Sales */}
-            <Route path="/sales" element={<SalesListPage />} />
-            <Route path="/sales/new" element={<SalesCreatePage />} />
-
-            {/* Invoices */}
-            <Route path="/invoices" element={<InvoicesListPage />} />
+            <Route element={<DashboardLayout />}>
+              <Route path="/"                    element={<DashboardPage />} />
+              <Route path="/products/new"        element={<ProductForm />} />
+              <Route path="/products"            element={<ProductsListPage />} />
+              <Route path="/products/edit/:id"   element={<ProductEditPage />} />
+              <Route path="/sales"               element={<SalesListPage />} />
+              <Route path="/sales/new"           element={<SalesCreatePage />} />
+              <Route path="/invoices"            element={<InvoicesListPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
