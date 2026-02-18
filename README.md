@@ -4,6 +4,10 @@ I.S.T.D PRO (Inventory & Sales Tracker Dashboard) is a modern web application bu
 
 This repository contains the frontend built with Vite, React, Tailwind CSS, and Recharts, providing a fast, responsive, and visually insightful experience for users to monitor performance and streamline sales operations.
 
+## Deployment with Vercel:
+
+[i-s-t-d-pro-client-b4smo8k3r-juansaldas-projects.vercel.app](https://istdproclient.vercel.app/login)
+
 ![I.S.T.D PRO Dashboard](public/ISTDPRO.png)
 
 
