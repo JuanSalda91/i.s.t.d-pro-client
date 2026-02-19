@@ -1,6 +1,10 @@
 # 🧭 I.S.T.D PRO — Inventory & Sales Tracker Dashboard
 
-I.S.T.D PRO (Inventory & Sales Tracker Dashboard) is a modern web application built to help businesses efficiently manage their inventory, sales, and invoicing workflows through an intuitive, data-driven interface.
+I.S.T.D PRO is a modern web application built to simplify how individuals and businesses manage their sales and invoices. Designed with clarity and efficiency in mind, it provides an intuitive experience that removes complexity from everyday operations.
+
+With features such as sales creation, invoice generation, product registration, printable PDF invoices, and real-time revenue tracking through dynamic charts, I.S.T.D PRO gives users full visibility over their business performance in one centralized platform.
+
+Clean design, straightforward workflows, and actionable financial insights make I.S.T.D PRO more than just a management tool, it’s a streamlined solution that keeps your business organized, informed, and in control.
 
 This repository contains the frontend built with Vite, React, Tailwind CSS, and Recharts, providing a fast, responsive, and visually insightful experience for users to monitor performance and streamline sales operations.
 
